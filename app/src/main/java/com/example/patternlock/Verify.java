@@ -1,44 +1,39 @@
 package com.example.patternlock;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.andrognito.patternlockview.PatternLockView;
 import com.andrognito.patternlockview.listener.PatternLockViewListener;
 import com.andrognito.patternlockview.utils.PatternLockUtils;
 import com.andrognito.patternlockview.utils.ResourceUtils;
-import com.andrognito.rxpatternlockview.RxPatternLockView;
-import com.andrognito.rxpatternlockview.events.PatternLockCompleteEvent;
-import com.andrognito.rxpatternlockview.events.PatternLockCompoundEvent;
 
 import java.util.List;
 
-import io.reactivex.functions.Consumer;
+
 
 public class Verify extends AppCompatActivity {
 
 
-
+    final String MyPREFERENCES = "MyPrefs";
+    // final String MyPREFERENCES = "MyPrefs";
+    String pass, skip;
 
     private TextView textView;
     private PatternLockView patternLockView;
     private Button confirm;
     String pattrn;
-
-    final String MyPREFERENCES = "MyPrefs";
-    String pass , skip;
-
+    private SharedPreferences sharedpreferences;
     private PatternLockViewListener patternLockViewListener = new PatternLockViewListener() {
         @Override
         public void onStarted() {
@@ -62,7 +57,6 @@ public class Verify extends AppCompatActivity {
                     Context.MODE_PRIVATE);
 
             pass=  pref.getString("PASS", "");
-            skip=  pref.getString("val", "");
 
             System.out.println("passval" +pass);
 
@@ -71,7 +65,9 @@ public class Verify extends AppCompatActivity {
                 patternLockView.setViewMode(PatternLockView.PatternViewMode.CORRECT);
                 Toast.makeText(Verify.this, "Welcome", Toast.LENGTH_LONG).show();
 
+
                 Intent intent=new Intent(Verify.this ,Final.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
 

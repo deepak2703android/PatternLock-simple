@@ -1,7 +1,5 @@
 package com.example.patternlock;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,17 +12,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.andrognito.patternlockview.PatternLockView;
 import com.andrognito.patternlockview.listener.PatternLockViewListener;
 import com.andrognito.patternlockview.utils.PatternLockUtils;
 import com.andrognito.patternlockview.utils.ResourceUtils;
-import com.andrognito.rxpatternlockview.RxPatternLockView;
-import com.andrognito.rxpatternlockview.events.PatternLockCompleteEvent;
-import com.andrognito.rxpatternlockview.events.PatternLockCompoundEvent;
 
 import java.util.List;
-
-import io.reactivex.functions.Consumer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView;
     private PatternLockView patternLockView;
     private Button confirm;
-   String pattrn;
+    String pattrn, skip;
 
     final String MyPREFERENCES = "MyPrefs" ;
     private SharedPreferences sharedpreferences;
@@ -95,6 +90,20 @@ public class MainActivity extends AppCompatActivity {
         patternLockView.setTactileFeedbackEnabled(true);
         patternLockView.setInputEnabled(true);
         patternLockView.addPatternLockListener(patternLockViewListener);
+
+        SharedPreferences pref = getSharedPreferences(MyPREFERENCES,
+                Context.MODE_PRIVATE);
+
+        skip = pref.getString("val", "");
+
+
+        if (skip.equals("1")) {
+            Intent intent = new Intent(MainActivity.this, Verify.class);
+            startActivity(intent);
+        }
+
+
+
 
 
         confirm.setOnClickListener(new View.OnClickListener() {
