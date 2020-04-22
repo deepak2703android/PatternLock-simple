@@ -41,7 +41,7 @@ public class Final extends AppCompatActivity {
                     startActivity(intent);
                     finish();
 
-
+ 
                 }
 
             }
